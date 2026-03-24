@@ -41,6 +41,7 @@ function App() {
             {/* Awards Pages */}
             <Route path="/awards/categories" element={<CompanyOrganizationAwards />} />
             <Route path="/awards/nomination" element={<IndividualLeadershipAwards />} />
+            <Route path="/awards/rules" element={<ExcellenceAwardsDemo />} />
             <Route path="/awards/winners" element={<ExcellenceAwardsDemo />} />
             
             <Route path="/gallery" element={<Gallery />} />

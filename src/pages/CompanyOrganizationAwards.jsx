@@ -14,6 +14,7 @@ import {
     Zap, 
     Trophy 
 } from 'lucide-react';
+import { useNavigate } from "react-router-dom";
 
 // Replicating the AwardCategory component logic
 const AwardCategory = ({ title, category, icon }) => (
@@ -36,6 +37,7 @@ const AwardCategory = ({ title, category, icon }) => (
 
 const CompanyOrganizationAwards = () => {
   // Data for the 'Company & Organization Awards' section, extracted from Awards.jsx
+  const navigate = useNavigate();  
   const companyAwards = [
     {
       title: "Company & Organization Awards",
@@ -146,22 +148,28 @@ const CompanyOrganizationAwards = () => {
         <div className="max-w-4xl mx-auto mt-20">
           <div className="bg-gradient-to-r from-blue-700 to-blue-800 rounded-2xl p-8 shadow-xl">
             <div className="flex flex-col sm:flex-row items-center justify-between gap-6">
-              <div className="text-center sm:text-left">
-                <h3 className="text-2xl font-bold text-white mb-2">
-                  Ready to Nominate?
-                </h3>
-                <p className="text-lg text-blue-100">
-                  Submit your entries for these prestigious categories before the deadline.
-                </p>
-              </div>
-              <div className="flex-shrink-0">
-                <button className="group px-6 py-3 bg-white text-blue-700 font-bold rounded-xl text-md hover:bg-blue-50 transition-all duration-300 transform hover:-translate-y-0.5 shadow-md">
-                  <span className="flex items-center gap-2">
-                    NOMINATION PORTAL
-                    <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-                  </span>
-                </button>
-              </div>
+
+  <div className="text-center sm:text-left cursor-pointer transition-all duration-300 group-hover:translate-x-1">
+    <h3 className="text-2xl font-bold text-white mb-2">
+      Ready to Submit Your Nomination?
+    </h3>
+    <p className="text-lg text-blue-100">
+      Take this opportunity to showcase excellence. Submit your nominations for these prestigious award categories before the deadline.
+    </p>
+  </div>
+
+ <div className="flex-shrink-0">
+  <button
+    type="button"
+    onClick={() => navigate("/awards/winners")}
+    className="group px-6 py-3 bg-white text-blue-700 font-bold rounded-xl text-md hover:bg-blue-50 transition-all duration-300 transform hover:-translate-y-0.5 shadow-md"
+  >
+    <span className="flex items-center gap-2">
+      NOMINATION PORTAL
+      <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1" />
+    </span>
+  </button>
+</div>
             </div>
           </div>
         </div>

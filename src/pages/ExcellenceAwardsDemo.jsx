@@ -188,9 +188,9 @@ const RulesAndGuidelines = () => (
                     <Trophy className="w-6 h-6 text-blue-600"/> 6. Important Dates
                 </h3>
                 <ul className="list-disc list-inside space-y-3 pl-8 text-gray-700 font-semibold">
-                    <li className="text-red-700">Last Date for Submission of Nominations: <span className="text-gray-800">15th March 2026</span></li>
+                    {/* <li className="text-red-700">Last Date for Submission of Nominations: <span className="text-gray-800">25th March 2026</span></li> */}
                     <li>Shortlisted nominees will be informed via official communication.</li>
-                    <li>Awards will be presented during the MARPORTS GLOBAL Conference & Excellence Awards 2026 on: <span className="text-gray-800">12th Feb 2026 at Lemon Tree Hotel, Trivandrum, India.</span></li>
+                    <li>Awards will be presented during the MARPORTS GLOBAL Conference & Excellence Awards 2026 on: <span className="text-gray-800">25th April 2026 at Lemon Tree Hotel, Trivandrum, India.</span></li>
                 </ul>
             </section>
 

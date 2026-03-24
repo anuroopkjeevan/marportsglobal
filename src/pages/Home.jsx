@@ -1,12 +1,12 @@
-import React from 'react';
-import { Award, Users, Calendar, Globe, Mic, ChevronRight, Trophy, Briefcase, Mail } from 'lucide-react';
+import React, { useState } from 'react';
+import { Award, Users, Calendar, Globe, Mic, ChevronRight, Trophy, Briefcase, Mail, Phone, X } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 // Assets
 import promotingLogo from '../assets/Final Logo 2020-1.png'; 
 import promo from '../assets/INSA.jpg'; 
 import promot from '../assets/Shipyards Assocn Logo.jpg'; 
-
+import sponsor from '../assets/SCI Navratna Logo2015 (1).png'; 
 const HeroImage = 'https://images.unsplash.com/photo-1568347877321-f8935c7dc5a3?q=80&w=1074&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D';
 
 // --- Sub-Components ---
@@ -62,6 +62,7 @@ const PageSummaryCard = ({ title, description, icon, link, bgColor }) => (
 
 const Home = () => {
   const featuredSpeakers = [];
+  const [isContactModalOpen, setIsContactModalOpen] = useState(false);
 
   // Page Summaries - UPDATED LINKS
   const pageSummaries = [
@@ -107,9 +108,9 @@ const Home = () => {
 
         <div className="container mx-auto px-4 relative z-10 py-16 md:py-24 lg:py-32">
           <div className="max-w-4xl mx-auto text-center">
-            <div className="inline-block bg-blue-600/20 backdrop-blur-sm text-blue-300 text-xs sm:text-sm font-bold uppercase tracking-[0.15em] sm:tracking-[0.2em] px-4 sm:px-6 py-2 rounded-full mb-4 sm:mb-6 border border-blue-500/50">
-              24 April 2026  | LEMON TREE HOTEL, TRIVANDRUM
-            </div>
+      <div className="inline-block bg-blue-600 text-white text-sm sm:text-base md:text-lg font-bold uppercase tracking-[0.15em] sm:tracking-[0.2em] px-6 sm:px-8 py-3 rounded-full mb-6 sm:mb-8 shadow-xl shadow-blue-500/40 border-2 border-blue-400">
+  24 April 2026 | LEMON TREE HOTEL, TRIVANDRUM
+</div>
 
             <h1 className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl xl:text-9xl font-extrabold text-white mb-4 sm:mb-6 tracking-tight leading-tight sm:leading-none">
               MARPORTS <span className="text-blue-400 block sm:inline">GLOBAL</span>
@@ -197,23 +198,38 @@ const Home = () => {
           </div>
 
           <div className="max-w-4xl mx-auto mt-16 text-center">
-            <h2 className="text-3xl font-extrabold text-gray-900 mb-8">Promoting Organization</h2>
-            <div className="flex flex-col items-center space-y-4 md:flex-row md:justify-center md:space-y-0 md:space-x-8">
-              <a href="https://www.asianshipowners.org/" target="_blank" rel="noopener noreferrer">
-                <div className="w-32 h-32 rounded-full border-4 border-blue-500 flex items-center justify-center bg-white shadow-lg overflow-hidden transition duration-300 hover:border-blue-700 hover:shadow-xl">
-                  <img src={promotingLogo} alt="Promoting Organization 1" className="object-contain w-full h-full p-2" />
-                </div>
-              </a>
-              <a href="https://www.insa.in/" target="_blank" rel="noopener noreferrer">
-                <div className="w-32 h-32 rounded-full border-4 border-blue-500 flex items-center justify-center bg-white shadow-lg overflow-hidden transition duration-300 hover:border-blue-700 hover:shadow-xl">
-                  <img src={promo} alt="Promoting Organization 2" className="object-contain w-full h-full p-2" />
-                </div>
-              </a>
-              <a href="https://www.shipyardsassociationofindia.com/" target="_blank" rel="noopener noreferrer">
-                <div className="w-32 h-32 rounded-full border-4 border-blue-500 flex items-center justify-center bg-white shadow-lg overflow-hidden transition duration-300 hover:border-blue-700 hover:shadow-xl">
-                  <img src={promot} alt="Promoting Organization 3" className="object-contain w-full h-full p-2" />
-                </div>
-              </a>
+            <div className="mb-10">
+              <h2 className="text-3xl font-extrabold text-gray-900 mb-6">Key Promoting Organizations</h2>
+              <div className="flex flex-col items-center space-y-4 md:flex-row md:justify-center md:space-y-0 md:space-x-8">
+          
+                <a href="https://www.shipindia.com/" target="_blank" rel="noopener noreferrer">
+                  <div className="w-32 h-32 rounded-full border-4 border-blue-500 flex items-center justify-center bg-white shadow-lg overflow-hidden transition duration-300 hover:border-blue-700 hover:shadow-xl">
+                    <img src={sponsor} alt="Key Promoting Organization 2" className="object-contain w-full h-full p-2" />
+                  </div>
+                </a>
+              </div>
+            </div>
+
+            <div>
+              <h2 className="text-3xl font-extrabold text-gray-900 mb-6">Promoting Organizations</h2>
+              <div className="flex flex-col items-center space-y-4 md:flex-row md:justify-center md:space-y-0 md:space-x-8">
+                <a href="https://www.asianshipowners.org/" target="_blank" rel="noopener noreferrer">
+                  <div className="w-32 h-32 rounded-full border-4 border-blue-500 flex items-center justify-center bg-white shadow-lg overflow-hidden transition duration-300 hover:border-blue-700 hover:shadow-xl">
+                    <img src={promotingLogo} alt="Promoting Organization 1" className="object-contain w-full h-full p-2" />
+                  </div>
+                </a>
+                <a href="https://www.insa.in/" target="_blank" rel="noopener noreferrer">
+                  <div className="w-32 h-32 rounded-full border-4 border-blue-500 flex items-center justify-center bg-white shadow-lg overflow-hidden transition duration-300 hover:border-blue-700 hover:shadow-xl">
+                    <img src={promo} alt="Promoting Organization 2" className="object-contain w-full h-full p-2" />
+                  </div>
+                </a>
+                
+                      <a href="https://www.shipyardsassociationofindia.com/" target="_blank" rel="noopener noreferrer">
+                  <div className="w-32 h-32 rounded-full border-4 border-blue-500 flex items-center justify-center bg-white shadow-lg overflow-hidden transition duration-300 hover:border-blue-700 hover:shadow-xl">
+                    <img src={promot} alt="Key Promoting Organization 1" className="object-contain w-full h-full p-2" />
+                  </div>
+                </a>
+              </div>
             </div>
           </div>
         </div>
@@ -306,21 +322,87 @@ const Home = () => {
                     REGISTER NOW
                   </a>
                 </div>
-                <div className="bg-blue-50 rounded-xl p-6">
+                <div className="bg-blue-50 rounded-xl p-6 flex flex-col">
                   <div className="flex items-center gap-3 mb-4">
                     <Mail className="w-6 h-6 text-blue-600" />
                     <h3 className="text-xl font-bold text-gray-900">Contact Us</h3>
                   </div>
                   <p className="text-gray-700 mb-4">For sponsorship inquiries and event information</p>
-                  <a href="mailto:jayadev@marportsglobal.com" className="block w-full text-center px-6 py-3 bg-white text-blue-600 font-bold rounded-lg hover:bg-blue-50 border border-blue-600 transition-colors">
+                  <a
+                    href="mailto:jayadev@marportsglobal.com"
+                    className="mt-auto mx-auto inline-flex items-center justify-center px-8 py-3 bg-white text-blue-600 font-bold rounded-lg hover:bg-blue-50 border border-blue-600 transition-colors"
+                  >
                     CONTACT TEAM
                   </a>
+                </div>
+
+                <div className="bg-blue-50 rounded-xl p-6 flex flex-col md:col-span-2 md:max-w-md md:mx-auto w-full">
+                  <div className="flex items-center gap-3 mb-4">
+                    <Mail className="w-6 h-6 text-blue-600" />
+                    <h3 className="text-xl font-bold text-gray-900">Accommodation</h3>
+                  </div>
+                  <p className="text-gray-700 mb-4">For hotel stay support and special room-rate assistance</p>
+                  <button
+                    type="button"
+                    onClick={() => setIsContactModalOpen(true)}
+                    className="mt-auto mx-auto inline-flex items-center justify-center px-8 py-3 bg-white text-blue-600 font-bold rounded-lg hover:bg-blue-50 border border-blue-600 transition-colors"
+                  >
+                    CONTACT TEAM
+                  </button>
                 </div>
               </div>
             </div>
           </div>
         </div>
       </section>
+
+      {isContactModalOpen && (
+        <div
+          className="fixed inset-0 z-[200] flex items-center justify-center bg-black/50 p-4"
+          onClick={() => setIsContactModalOpen(false)}
+        >
+          <div
+            className="w-full max-w-2xl rounded-2xl bg-white p-6 md:p-8 shadow-2xl"
+            onClick={(event) => event.stopPropagation()}
+          >
+            <div className="mb-5 flex items-start justify-between gap-4">
+              <h3 className="text-2xl font-bold text-gray-900">Accommodation Support</h3>
+              <button
+                type="button"
+                onClick={() => setIsContactModalOpen(false)}
+                className="rounded-md p-2 text-gray-500 hover:bg-gray-100 hover:text-gray-700"
+                aria-label="Close popup"
+              >
+                <X className="h-5 w-5" />
+              </button>
+            </div>
+
+            <p className="mb-5 text-gray-700 leading-relaxed">
+              For accommodation arrangements during Marports Global, guests are invited to directly connect with the hotel
+              to avail special room rates extended exclusively for Marports attendees.
+            </p>
+
+            <div className="rounded-xl border border-blue-200 bg-blue-50 p-5">
+              <p className="text-lg font-bold text-gray-900">Mr. Gireesh</p>
+              <p className="mt-1 font-medium text-gray-800">Lemon Tree Hotel Thiruvananthapuram</p>
+              <p className="mt-4 flex items-center gap-2 text-gray-700">
+                <Phone className="h-4 w-4 text-blue-600" />
+                <a href="tel:+919497526449" className="hover:text-blue-700">+91 94975 26449</a>
+              </p>
+              <p className="mt-2 flex items-center gap-2 text-gray-700">
+                <Mail className="h-4 w-4 text-blue-600" />
+                <a href="mailto:sales.ltptm@lemontreehotels.com" className="hover:text-blue-700">
+                  sales.ltptm@lemontreehotels.com
+                </a>
+              </p>
+            </div>
+
+            <p className="mt-5 text-gray-700 leading-relaxed">
+              All reservations and special rate requests may be coordinated directly with the hotel.
+            </p>
+          </div>
+        </div>
+      )}
 
       {/* Footer */}
       <footer className="bg-black text-white/70 py-12">

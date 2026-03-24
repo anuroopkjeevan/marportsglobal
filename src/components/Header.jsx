@@ -27,9 +27,9 @@ const Header = () => {
       name: "Conference Topics", 
       icon: <Calendar className="w-5 h-5" />,
       // Main link path for the Conference Topics page
-      to: "/",
+      to: "/conference-topics",
       subLinks: [
-        { name: "Speakers", to: "/conference-topics/speakers" },
+        { name: "Speakers And Panelists", to: "/conference-topics/speakers" },
         { name: "Agenda", to: "/conference-topics/agenda" },
         { name: "Advisory Board", to: "/conference-topics/advisory-board" },
       ]
@@ -39,8 +39,8 @@ const Header = () => {
       icon: <Award className="w-5 h-5" />,
       subLinks: [
         { name: "Award Categories", to: "/awards/categories" },
-        { name: "Rules and Regulations", to: "/awards/winners" },
-        { name: "Winners", to: "/awards/rules" },
+        { name: "Rules and Regulations", to: "/awards/rules" },
+        { name: "Winners", to: "/awards/winners" },
       ]
     },
     { name: "Gallery", to: "/gallery", icon: <Code className="w-5 h-5" /> }, 
