@@ -1,5 +1,6 @@
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { ShieldCheck, Search, FileText, X, User } from 'lucide-react';
+import { fetchCmsPageContent, getCmsPageContent, subscribeCmsContent } from '../cms/content/storage';
 
 import promo from '../assets/sankalpog.jpeg';
 import rahul from '../assets/rahuloak.jpeg';
@@ -16,16 +17,31 @@ import kumar from '../assets/harikumar.jpeg';
 import tijo from '../assets/tijo.jpeg';
 import ajay from '../assets/ajay.jpeg';
 import asha from '../assets/ashapillai.jpeg';
+import rr from '../assets/rr.jpeg';
+import ll from '../assets/aaa.jpeg';
+import anjana from '../assets/anjana kr.jpeg';
+import ft from '../assets/ft.jpeg';
+import krishnakumar from '../assets/N Krishna Kumar.jpeg';
+import sanja from '../assets/sanja.jpeg';
+import cha from '../assets/chaudhari.jpeg';
+import gupta from '../assets/gupta.jpeg';
+import govindha from '../assets/govindha.jpeg';
+import key from '../assets/key note.jpeg';
 
-
-
-const speakers = [
+export const defaultSpeakers = [
   {
     name: 'Capt. (Dr.) Sankalp Shukla',
     title: 'Managing Director â€“ Bernhard Schulte Shipmanagement (India) Pvt. Ltd.',
     description:
       "Capt. Sankalp Shukla joined BSM, formerly known as Eurasia, in 1995. He began his journey as a Deck Cadet and served on various types of vessels until attaining command in 2007. Following this, he joined BSMâ€™s Chennai office as Fleet Personnel Manager in September 2008. He later took a sabbatical to pursue an MSc in Shipping, Logistics and Supply Chain Management from the University of Plymouth, United Kingdom. Thereafter, he rejoined BSM in 2009 as a Marine Superintendent and was promoted in 2010 to the rank of Crew Manager, additionally shouldering responsibilities for business development. In December 2012, he was promoted to Deputy Director of BSM Crew Service Centre India, followed by his appointment as Director in December 2014 and subsequently as Managing Director in 2020. During his tenure, there was a substantial increase in the number of Indian seafarers serving on ships managed by the company. Overall, he has completed over 30 years with the BSM Group and continues to contribute actively to its growth. Capt. Shukla also serves as Chairman of the Foreign Ownersâ€™ Representatives and Ship Managers Association (FOSMA), Court Member of the Indian Maritime University (IMU), Trustee at NUSI ITF Trust and Maritime Floating Staff Welfare Trust (MFSWT), and General Secretary of the Maritime Awareness Program Society (MAPS). He has been conferred the prestigious Honorary Doctorate (Honoris Causa) by AMET University (Academy of Maritime Education and Training), India. The honorary degree was bestowed by Shri K. Ramachandran, Chancellor, during the institution's 32nd-year celebrations at a convocation ceremony held in Chennai on 28 January 2026.",
     imageSrc: promo,
+  },
+   {
+    name: 'Shri.Shyam Jagannathan I.A.S',
+    title: `Director General of Shipping & Additional Secretary to the Government of India`,
+    description:
+      'Director General of Shipping & Additional Secretary to the Government of India',
+    imageSrc: key,
   },
   {
     name: 'Mr.Rajesh Menon',
@@ -35,11 +51,27 @@ const speakers = [
     imageSrc: rajesh,
   },
   {
-    name: 'Mr. Anil Yendluri, IPS (Retd.)',
-    title: 'Managing Director â€“ Vishwa Samudra Engineering Pvt. Ltd\nFormer CEO â€“ Krishnapatnam Port',
+    name: 'Cmd Jayanta Chowdhury, IN (Retd.)',
+    title: 'Advisor to Chairman GRSE',
     description:
-      'Anil Yendluri is a retired Indian Police Service (IPS) officer with over 30 years of experience in law enforcement and public administration. He has held key positions in various government departments and has been instrumental in promoting sustainable development and energy efficiency initiatives. His expertise spans across policy formulation, strategic planning, and implementation of green technologies in maritime operations.',
-    imageSrc: anil,
+      `Commodore Jayanta Chowdhury, IN (Retd.)
+Advisor to Chairman
+GRSE
+Commodore Jayanta Chowdhury joined Indian Navy in 1988 in Engineering
+branch. He is a graduate in Mechanical Engineering from Jadavpur University, Kolkata
+with a post graduate diploma in Naval Construction from IIT Delhi. He also holds an
+MBA degree in Systems and Operations Research. During his entire service life, he has
+been mostly associated with ship building, ship repair, ship design and ship project
+management. He had the unique opportunity of heading the Indigenous Aircraft Carrier
+Programme (INS Vikrant) as well as the futuristic S5 Non-Conventional Submarine
+Programme. He has served in both surface ship and submarine design directorates as
+well as in the ship production directorate. In January 2023, after superannuation,
+Commodore Chowdhury got associated with Garden Reach Shipbuilders as an Advisor
+to the Chairman. His main contribution to the growth stories of the shipyard has been
+the setting up of a commercial shipbuilding division with a healthy orderbook. Other than
+providing recommendations on policy level changes in the yard, Commodore
+Chowdhury is currently associated with the expansion programme of the shipyard.`,
+    imageSrc: cha,
   },
   {
     name: 'Mr. Datuk Puvanesan Subenthiran',
@@ -48,16 +80,16 @@ const speakers = [
       'Datuk Puvanesan A/L Subenthiran is one of the founding members of PRIVASIA and was appointed as the Group Chief Executive Officer (GCEO) and Managing Director of PRIVASIA Group on 4 May 2009. Prior to this, Datuk Puvanesan was a senior in the Business Advisory and Assurance Department of BDO Simpsons Xavier in Ireland. Upon returning to Malaysia, he held the position of Chief Financial Officer of the Makmal Jaya Group. Since November 2024, he has been serving as an Executive Director of NexG Berhad and was re-appointed as an Investment Panel Member of the Human Resource Development Corporation in March 2025. He also holds directorships in several private limited companies incorporated in Malaysia.',
     imageSrc: puvan,
   },
-     {
-    name: 'Mr. Harikumar Ambalapparambil',
-    title: 'Chief Executive Officer Udupi cochin Shipyard Ltd',
-    description:`Mr. Harikumar Ambalapparambil is a native of Kochi, Kerala who has completed his schooling and pre-university education in Kochi and graduated with a degree in Engineering from Government Engineering College, Thrissur, in 1986.He began his professional career in 1987 as a Junior Engineer with M/s FORDEC (India) Pvt. Ltd., working at the M/s Mazagon Dock Mangalore Yard. In 1988, he joined M/s Cochin Shipyard Limited as a Graduate Engineer Trainee. Over the next 20 years, he served in various capacities, steadily rising to the position of Assistant General Manager. In 2008, he moved to  M/s Tebma Shipyards Limited, Malpe, as General Manager (Technical), where he contributed significantly for six years. In 2014, he joined M/s Larsen& Toubro Shipbuilding, Kattupalli, Chennai, as Head (Engineering), serving the organization for approximately seven years.  He has  vast experience of over thirty five years  in shipbuilding, ship repair, and project management.In February 2021, he assumed charge as Chief Executive Officer of M/s Udupi Cochin Shipyard Limited (UCSL), Malpe—a wholly owned subsidiary of Cochin Shipyard Limited under the Ministry of Ports, Shipping and Waterways. At the time, the yard (formerly Tebma Shipyards Limited) required revival  and  operational  restructuring.  However  under  his  leadership,  M/s  UCSL  underwent  a remarkable transformation. The shipyard was made operational within six months and secured its first commercial contract within a year. Since then, the yard has successfully delivered six tugs under the ASTDS program to Indian clients and four  3800 DWT Bulk carriers to clients fromEurope.   Most of these  deliveries were completed  ahead of schedule, which helped the yard in securing further orders, both from Indian and international clients, expanding the order book of the yard  to over ₹2,500 crores and positioning UCSL in the global shipbuilding market. Under his leadership the shipyard saw a steady increase of revenue over the pastfour years, and the yard started reporting profits from the financial year 2023-24.Mr. Harikumar is a Fellow of the Institution of Engineers (India) and a Fellow of the Institute of Marine Engineers (India).
-`,
-        imageSrc: kumar,
-  }
+  {
+    name: "Anjana.K.R",
+  tile : '',
+    description:'Anjana.K.R is the Chief General Manager overseeing the Design & Engineering and Materials Procurement Departments at Cochin Shipyard Ltd. She holds a Bachelor of Technology degree in Naval Architecture & Ship Building from the Cochin University of Science & Technology. With nearly three decades of experience, she has worked extensively across ship design, shipbuilding, production engineering, and shipbuilding materials procurement. She has contributed to an impressive array of defence and commercial projects, reflecting both her comprehensive technical knowledge and her leadership in the maritime sector. She also serves as a Director on the boards of Udupi Cochin Shipyard and Hooghly Cochin Shipyard Ltd., which are wholly owned subsidiary companies of CSL.',
+
+    imageSrc: anjana,
+  },
   ,
   {
-    name: 'Mr.R ahul Oak',
+    name: 'Mr. Rahul Oak',
     title: 'Head of Energy Projects | Torm Shipping India Pvt Ltd',
     description:
       'Rahul Oak is a passionate maritime professional with more than 24 years of ship handling experience across various capacities and roles. He began his maritime journey in the millennium year 2000 as a Sailing Engineer Officer on SCI tanker ships. When he stepped ashore in 2012 to join Torm Shipping India as a Technical Superintendent, he had already sailed for several years as a Chief Engineer, gaining wide experience in most aspects of shipping operations. Based primarily in Mumbai, he acquired extensive knowledge in shipboard operations, technical ship management, risk management, and crew handling. As Head of Energy Projects at TORM for more than 3.5 years, he has actively contributed to reducing TORMâ€™s COâ‚‚ footprint by implementing various energy-saving projects onboard TORM vessels.',
@@ -84,32 +116,32 @@ const speakers = [
       'Hemant Sahai is the Founding Partner of HSA Advocates and has spent over three decades advising on some of Indiaâ€™s most complex and high-impact infrastructure and energy projects. His body of work spans the entire lifecycle of large public-private partnership projects, from structuring of concession and competitive bidding documents to financing, implementation, and navigating the regulatory environment. Infrastructure including ports form a significant part of his practice. He has advised on development of major greenfield and brownfield projects in transportation and connectivity infrastructure including ports, airports, inland waterways and highways. One of the landmark engagements where he advised is the bidding of the Vizhinjam International Deepwater Transshipment Seaport in Kerala, Indiaâ€™s first deep-water transshipment hub. Mr. Sahai had advised on the development of the project, including bid advisory, drafting of the bidding documents and the concession agreements, and continues to advise VISL on implementation support. His role included advising on the complex advisory and environmental issues including defending the project from diverse environmental related challenges before the National Green Tribunal and the Supreme Court of India. His work on Vizhinjam has helped set the framework for large-scale port PPPs in India. His practice areas include corporate advisory, project finance, mergers and acquisitions, regulatory, and dispute resolution. He advises across sectors including infrastructure, energy, manufacturing, services, and financial services sectors, with a strong focus on critical and emerging sectors such as renewable energy, green hydrogen, offshore wind, and nuclear energy. He has also advised governments, regulators, and multilateral institutions on policy and regulatory matters, and is consistently ranked Band 1 by leading publications such as Chambers and Partners for Projects, Energy and Infrastructure.',
     imageSrc: hem,
   },
-  {
-    name: `Dr. R. Sundaravadivelu FNAE`,
-    title: 'Emeritus Professor (Retd) IIT MADRAS',
-    description:` Prof. R. Sundaravadivelu FNAE has about 40 Years of Teaching, Research and
-Consultancy experience in IIT Madras in the field of Offshore, Coastal, Ship and Ports &
-Harbors Structures.
-• He has retired as Emeritus Professor from Department of Ocean Engineering, IIT Madras
-in 2023.
-• He is presently Director Prof. R. Sundaravadivelu Advisory Services Pvt Ltd.
-• He has guided 25 PhD and 60 M Tech and B Tech projects. He has published about 200
-international journal and conference papers.
-• He has served in the governing council of Indian Maritime University, IIT Madras and
-CRRI Delhi. He is presently Chairperson CED 47 Bureau of Indian Standards committee
-on Ports, Harbours and Offshore Installations.
-• He is the Fellow of the Indian national Academy of Engineering and Indian Geotechnical
-Society.
-• He has successfully completed about 1000 consultancy projects worth Rs. 50,000 crores.
-The notable projects are for various ports, Navy, Coast guard, Ministry of Defence,
-Ministry of External Affairs, Ministry of Shipping, Ministry of Home, DGNP, Shipyards,
-Maritime Boards, Alhw, Rites, ITD, Afcons, NEC, Rkec, Simplex, L&T, Atomic Energy,
-RIL etc `,
-    imageSrc: surendran,
+    {
+    name: 'Mr. Hemant Sahai',
+    title: 'Founding Partner | HSA Advocates',
+    description:
+      'Hemant Sahai is the Founding Partner of HSA Advocates and has spent over three decades advising on some of Indiaâ€™s most complex and high-impact infrastructure and energy projects. His body of work spans the entire lifecycle of large public-private partnership projects, from structuring of concession and competitive bidding documents to financing, implementation, and navigating the regulatory environment. Infrastructure including ports form a significant part of his practice. He has advised on development of major greenfield and brownfield projects in transportation and connectivity infrastructure including ports, airports, inland waterways and highways. One of the landmark engagements where he advised is the bidding of the Vizhinjam International Deepwater Transshipment Seaport in Kerala, Indiaâ€™s first deep-water transshipment hub. Mr. Sahai had advised on the development of the project, including bid advisory, drafting of the bidding documents and the concession agreements, and continues to advise VISL on implementation support. His role included advising on the complex advisory and environmental issues including defending the project from diverse environmental related challenges before the National Green Tribunal and the Supreme Court of India. His work on Vizhinjam has helped set the framework for large-scale port PPPs in India. His practice areas include corporate advisory, project finance, mergers and acquisitions, regulatory, and dispute resolution. He advises across sectors including infrastructure, energy, manufacturing, services, and financial services sectors, with a strong focus on critical and emerging sectors such as renewable energy, green hydrogen, offshore wind, and nuclear energy. He has also advised governments, regulators, and multilateral institutions on policy and regulatory matters, and is consistently ranked Band 1 by leading publications such as Chambers and Partners for Projects, Energy and Infrastructure.',
+    imageSrc: hem,
+  },
+      {
+    name: 'Mr. Hemant Sahai',
+    title: 'Founding Partner | HSA Advocates',
+    description:
+      'Hemant Sahai is the Founding Partner of HSA Advocates and has spent over three decades advising on some of Indiaâ€™s most complex and high-impact infrastructure and energy projects. His body of work spans the entire lifecycle of large public-private partnership projects, from structuring of concession and competitive bidding documents to financing, implementation, and navigating the regulatory environment. Infrastructure including ports form a significant part of his practice. He has advised on development of major greenfield and brownfield projects in transportation and connectivity infrastructure including ports, airports, inland waterways and highways. One of the landmark engagements where he advised is the bidding of the Vizhinjam International Deepwater Transshipment Seaport in Kerala, Indiaâ€™s first deep-water transshipment hub. Mr. Sahai had advised on the development of the project, including bid advisory, drafting of the bidding documents and the concession agreements, and continues to advise VISL on implementation support. His role included advising on the complex advisory and environmental issues including defending the project from diverse environmental related challenges before the National Green Tribunal and the Supreme Court of India. His work on Vizhinjam has helped set the framework for large-scale port PPPs in India. His practice areas include corporate advisory, project finance, mergers and acquisitions, regulatory, and dispute resolution. He advises across sectors including infrastructure, energy, manufacturing, services, and financial services sectors, with a strong focus on critical and emerging sectors such as renewable energy, green hydrogen, offshore wind, and nuclear energy. He has also advised governments, regulators, and multilateral institutions on policy and regulatory matters, and is consistently ranked Band 1 by leading publications such as Chambers and Partners for Projects, Energy and Infrastructure.',
+    imageSrc: hem,
+  },
+    {
+    name: 'Mr.Manoranjan Gupta',
+    title: 'Chief Product Officer Portall Infosystems',
+    description:
+      `A techno-functional leader with over 30 years in shipping and logistics domain. He has been in leadership role for driving product strategy, development, and delivery of technology platforms in shipping and logistics focusing on innovation, operational efficiency, and business growth, with expertise in Port Community Systems and National Single Window.
+
+Along with other turnkey implementations across globe, Manoranjan was instrumental in design and delivering the next gen Port Community System in India as well as lead the first ever Cargo Community System for Air Cargo in India.`,
+    imageSrc: gupta,
   },
    {
     name: 'Mr. Vivek Sharma',
-    title: `Head of Business Development,
+    title: `A.P. Moller - Maersk | Head of Business Development,
 Public Policy and Regulatory Affairs
 India, Bangladesh and Sri Lanka Region`,
     description:`Vivek leads the growth of businesses and
@@ -154,10 +186,21 @@ With a strong blend of technical expertise and strategic vision, Mr. Tijo C. Mat
   },
     {
     name: 'Mr. Amlan Bora',
-    title: 'Speaker | Chief Representative | Port of Rotterdam Authority',
+    title: 'Chief Representative | Port of Rotterdam Authority',
     description:
       'Amlan Bora is an experienced global supply chain professional who has worked with major multinational organizations such as Siemens, Philips, and Diageo in progressively senior leadership roles. Prior to his current position, he served as the Chief Representative and Trade & Investment Commissioner of the Netherlands Business Support Offices (NBSO) in India. The NBSOs are trade offices managed by the Ministry of Economic Affairs of the Dutch Government, supporting bilateral trade and investment between the Netherlands and India. Having spent many years in India, Amlan is deeply connected to and committed to the countryâ€™s development. He serves as an advisor to several non-profit organizations in India and abroad.',
     imageSrc: amla,
+  },
+      {
+    name: 'Capt. Govind Azhakath',
+    title: 'Director- Marine, Synergy Kochi',
+    description:
+      `Capt. Govind Azhakath
+Director- Marine, Synergy Kochi
+A seasoned Master Mariner with over three decades of global maritime leadership, Capt. Govind Azhakath heads ship management operations across tankers, gas carriers, bulk and container fleets. He has played a pivotal role in transforming and scaling operations into a high-performance, multi-vessel platform delivering safety, reliability and commercial excellence. 
+He is known for staying composed when it matters most—whether handling high-risk situations, leading major fleet transitions, or driving efficiency and sustainability across operations. 
+His approach to green shipping is grounded in practicality: making sustainability work not just in theory, but on real ships, in real conditions.`,
+    imageSrc: govindha,
   },
      {
     name: `Mr. Ajay Kumar Singh`,
@@ -193,7 +236,65 @@ Her career uniquely bridges industry and academia, with contributions in educati
 Dr. Pillai is also the Founder Director of AiD Foundation and has held senior roles in container terminal and leading global shipping and logistics organizations, along with serving as visiting faculty at premier maritime institutions.`,
     imageSrc: asha,
   },
+   {
+    name: 'Mr.Krishna Prasad T.K',
+    title: `Director and General  Manager 
+Boskalis Group of Companies (India)`,
+    description:`Krishna Profile
+Krishna Prasad T.K. is a seasoned strategic business leader in the port and maritime services sector, with over two decades of experience spanning operations, contract management, and international project execution. As Director and General Manager of Boskalis Group Company in India since 2009, he has spearheaded business expansion across India and driving revenue growth through innovative strategies, stakeholder partnerships, and efficient contract negotiations. His leadership has been instrumental in securing major dredging projects in east west cost of India.
  
+Earlier in his career, Krishna held key roles in international dredging, shipping, and offshore operations, where he honed expertise in logistics, procurement, and site administration. In his early tenure provided him with deep technical knowledge of vessel operations, compliance, and safety management. With certifications in business management, supply chain, maritime law, and AI & machine learning, Krishna blends technical acumen with strategic foresight. His achievements include successfully entering new segments of port development and negotiating high-value contracts with government and industry stakeholders, positioning him as a dynamic leader in the maritime industry.`,
+    imageSrc: rr,
+  },
+  {
+    name: 'Mr.Harisankar Radhakrishnan',
+    title: `CEO UL Technology Solutions`,
+    description:`Harisankar is a seasoned executive with over two decades of leadership experience in elevating customer experience, driving innovation, and scaling high-growth enterprises. His career spans Fortune 100 firms (Amazon, J&J), major Indian conglomerates (Tata Group, ITC, ULCCS), and top-tier consultancies (Accenture).
+As the CEO of UL Technology Solutions (ULTS), the technology arm of the centenary-old ULCCS, Hari focuses on delivering value through new age technologies - AI, IoT, and analytics for his customers. Under his leadership, ULTS has executed cutting-edge projects including Smart City Digital Twins and urban planning initiatives, large-scale Digital Transformations for public and private sectors, Cybersecurity Audits for leading stock exchanges, and ERP & BI Transformations for major retail conglomerates.
+Previously, Hari played a pivotal role at Amazon, where he transformed the multi-billion dollar business unit - Wireless devices to the #1 player in the online mobile segment in India. He was also a founding member of the Tata Group’s digital platform for MSMEs, where he defined the business & product strategy, and successfully onboarded over 1.2 lakh customers in the inaugural year.
+A recipient of the 2025 Distinguished Alumni Award from IIM Kozhikode, he is recognized for his ability to drive high-velocity innovation and operational excellence in diverse environments - B2C and B2B business models, enterprise powerhouses, and large-scale cooperatives. He also serves as a Guest Faculty in Strategy and Marketing area, sharing his experience and learnings with the next generation of business leaders. He holds an MBA from IIM Kozhikode and a B.Tech from the College of Engineering Trivandrum (CET).`,
+    imageSrc: ll,
+  },
+    {
+    name: 'Mr. Rajesh Asati',
+    title: `Deputy Secretary, Ministry of Ports, Shipping and Waterways`,
+    description:'Rajesh Asati is a seasoned expert in maritime infrastructure and strategic planning, currently serving as Deputy Secretary (Ports) in the Ministry of Ports, Shipping & Waterways of Government of India. With over 17 years of experience, he has led transformative initiatives including the Public Private Partnership Project in Ports, Maritime Development Fund, Sagarmala Program, transshipment ports, and privatization efforts for jetties and shipyards. His previous tenure at the Gujarat Maritime Board saw pivotal contributions to the National Maritime Heritage Complex and maritime education. Rajesh holds advanced degrees in shipping management, Urban & Regional Planning and Civil Engineering, complemented by certifications in contract management, and dispute resolution.',
+    imageSrc: ft,
+  },
+     {
+    name: 'Mr. N Krishna Kumar',
+    title: `Senior VP-South India-MSC`,
+    description:`B. Sc.(Phy) Graduate from Loyola college and an MBA from Great Lakes Institute of Management.
+Started my carrier with Maersk as Management trainee in 1993. 
+Have over three decades of shipping and logistics experience across functions like Customer service, Sales, Pricing and General Management.
+Have worked closely with Global retailers for designing and executing their Supply Chain Management solutions.
+Have exposure to diverse leadership positions in diverse overseas markets at Hong Kong and Egypt.
+Currently, based out of Chennai and heading the Southern Region for Mediterranean Shipping Company(MSC).
+A keen sports fan and fitness enthusiast.`,
+    imageSrc: krishnakumar,
+  },
+      {
+    name: 'Capt. Sanjay Kushwaha,',
+    title: `Director - Cruise & Hospitality  |  Bernhard Schulte Cruise & Hospitality Services (India) Pvt. Ltd.`,
+    description:`Captain Sanjay Kushwaha - Bio
+Captain Sanjay Kushwaha, Master Mariner, is a maritime leader with 35 years of
+experience spanning ship command, global operations, and the development of
+international maritime business across multiple markets in Cruise and Hospitality
+sectors.
+He has moved from leading complex operations at sea to building shore-based strategy
+and capability—focused on cruise ship management, workforce readiness, recruitment,
+and hospitality skilling that underpin scalable growth in the cruise sector.
+As Director – Cruise & Hospitality at Bernhard Schulte Cruise and Hospitality Services,
+he has helped establish and scale the company’s cruise platform in India, translating
+global operating models and service standards into locally executable plans aligned with
+India’s evolving maritime priorities.
+His work sits at the intersection of industry, government, and talent pipelines—
+supporting the design of scalable ocean and river cruise ecosystems while shaping skilldevelopment frameworks intended to unlock large-scale, quality employment.
+With a strong focus on sustainable and future-ready practices, Captain Kushwaha brings
+an execution-oriented perspective to India’s cruise and inland waterways journey—
+connecting policy intent, industry capability, and on-ground delivery`,
+    imageSrc: sanja,
+  },
 ];
 
 const normalizeCopy = (value = '') =>
@@ -220,15 +321,20 @@ const toSingleLine = (value = '') => normalizeCopy(value).replace(/\n+/g, ' ').r
 const extractRole = (speaker = {}) => {
   const cleanName = toSingleLine(speaker.name || '').toLowerCase();
   const cleanTitle = toSingleLine(speaker.title || '').toLowerCase();
-
+ if (cleanName.includes('Shri.Shyam Jagannathan I.A.S')) return 'Keynote speaker';
   if (cleanName.includes('rajesh menon')) return 'Moderator';
   if (cleanName.includes('asha pillai')) return 'Moderator';
+  if (cleanName.includes('anjana.k.r') || cleanName.includes('anjana k r') || cleanName.includes('anjan kr')) return 'Moderator';
+  if (cleanName.includes('amlan bora')) return 'Speaker';
+  if (cleanName.includes('anil yendluri') || cleanName.includes('anil yedhuri')) return 'Speaker';
+  if (cleanName.includes('hemant sahai')) return 'Speaker';
   if (cleanTitle.includes('moderator')) return 'Moderator';
   if (cleanTitle.includes('panelist')) return 'Panelist';
-  if (cleanTitle.includes('speaker')) return 'Speaker';
 
+  if (cleanTitle.includes('speaker')) return 'Speaker';
   // Default all unspecified entries to Panelist as requested
   return 'Panelist';
+
 };
 
 const displayTitle = (title = '') => toSingleLine(title).replace(/\s*\|\s*/g, ' | ');
@@ -347,16 +453,38 @@ const BioModal = ({ speaker, onClose }) => {
 const Speakers = () => {
   const [query, setQuery] = useState('');
   const [selectedSpeaker, setSelectedSpeaker] = useState(null);
-  const organizedSpeakers = useMemo(
-    () =>
-      speakers.map((speaker) => ({
+  const [speakersData, setSpeakersData] = useState(defaultSpeakers);
+
+  useEffect(() => {
+    const applyCmsData = () => {
+      const cms = getCmsPageContent('speakers');
+      const nextSpeakers = Array.isArray(cms.speakers) ? cms.speakers : defaultSpeakers;
+      setSpeakersData(nextSpeakers);
+    };
+
+    applyCmsData();
+    fetchCmsPageContent('speakers').then(applyCmsData);
+    const unsubscribe = subscribeCmsContent(applyCmsData);
+    return unsubscribe;
+  }, []);
+
+  const organizedSpeakers = useMemo(() => {
+    const seen = new Set();
+
+    return speakersData
+      .map((speaker) => ({
         ...speaker,
         name: toSingleLine(speaker.name),
         title: displayTitle(speaker.title),
         description: normalizeCopy(speaker.description),
-      })),
-    [],
-  );
+      }))
+      .filter((speaker) => {
+        const dedupeKey = `${speaker.name.toLowerCase()}|${speaker.title.toLowerCase()}`;
+        if (seen.has(dedupeKey)) return false;
+        seen.add(dedupeKey);
+        return true;
+      });
+  }, [speakersData]);
 
   const filteredSpeakers = useMemo(() => {
     if (!query.trim()) return organizedSpeakers;

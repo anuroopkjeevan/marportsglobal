@@ -11,6 +11,12 @@ node_modules
 dist
 dist-ssr
 *.local
+.env
+.env.*
+!.env.example
+cpanel-deploy.zip
+temp_*.html
+temp_*.js
 
 # Editor directories and files
 .vscode/*

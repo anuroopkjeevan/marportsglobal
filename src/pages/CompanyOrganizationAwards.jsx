@@ -63,7 +63,7 @@ const CompanyOrganizationAwards = () => {
       icon: <Users className="w-6 h-6" />,
       awards: [
         { title: "CEO of the Year", category: "Leadership", icon: <Users className="w-5 h-5" /> },
-        { title: "Woman Personality of the Year – Shipping", category: "Diversity & Inclusion", icon: <Star className="w-5 h-5" /> },
+        { title: "Inspiring Women Leader- Maritime Sector of the year", category: "Diversity & Inclusion", icon: <Star className="w-5 h-5" /> },
         { title: "Young Entrepreneur of the Year – Maritime", category: "Entrepreneurship", icon: <Zap className="w-5 h-5" /> },
         { title: "Best Maritime Personality", category: "Industry Recognition", icon: <Star className="w-5 h-5" /> },
       ]

@@ -1,7 +1,23 @@
 Options -MultiViews
-RewriteEngine On
-RewriteBase /
 
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule ^ index.html [L]
+<IfModule mod_mime.c>
+  AddType text/javascript .js .mjs
+  AddType text/css .css
+</IfModule>
+
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteBase /
+
+  # Never rewrite static assets or known static files
+  RewriteRule ^assets/ - [L]
+  RewriteRule ^(favicon\.ico|robots\.txt|sitemap\.xml|vite\.svg)$ - [L]
+
+  # Keep existing files/directories as-is
+  RewriteCond %{REQUEST_FILENAME} -f [OR]
+  RewriteCond %{REQUEST_FILENAME} -d
+  RewriteRule ^ - [L]
+
+  # SPA fallback
+  RewriteRule . /index.html [L]
+</IfModule>
